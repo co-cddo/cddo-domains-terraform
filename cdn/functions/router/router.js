@@ -1,3 +1,16 @@
+function redirect(url) {
+    var response = {
+        statusCode: 307,
+        statusDescription: 'Temporary Redirect',
+        headers: {
+            'location': {
+              value: url
+            }
+        }
+    };
+    return response;
+}
+
 function handler(event) {
     var request = event.request;
     var headerKeys = Object.keys(request.headers);
@@ -9,9 +22,6 @@ function handler(event) {
     } else if (headerKeys.indexOf(':authority') > -1) {
         host = request.headers[':authority'].value;
     }
-
-    var prefix = 'https://www.gov.uk';
-    var new_uri = null;
 
     if (uri.match(/^\/.well[-_]known\/teapot$/)) {
       return {
@@ -33,33 +43,26 @@ function handler(event) {
     }
 
     if (uri.match(/^(\/.well[-_]known)?\/security\.txt$/)) {
-      prefix = 'https://vdp.cabinetoffice.gov.uk';
-      new_uri = '/.well-known/security.txt';
+      return redirect("https://vdp.cabinetoffice.gov.uk/.well-known/security.txt");
     }
 
-    if (host == 'cddo.cabinetoffice.gov.uk') {
-      // default
-      new_uri = '/government/organisations/central-digital-and-data-office/about';
-
-      if (uri.indexOf('/github') == 0) {
-        prefix = 'https://github.com';
-        new_uri = '/co-cddo';
-      }
-      if (uri.indexOf('/ddat-framework') == 0) {
-        new_uri = '/government/collections/digital-data-and-technology-profession-capability-framework';
-      }
+    if (uri.match(/^\/gccc$/)) {
+      return redirect("https://www.gov.uk/government/publications/government-cyber-security-strategy-2022-to-2030/government-cyber-security-strategy-2022-to-2030-html#pillar-2-defend-as-one");
     }
 
-    var response = {
-        statusCode: 307,
-        statusDescription: 'Temporary Redirect',
-        headers: {
-            'location': {
-              value: `${prefix}${new_uri != null ? new_uri : ''}`
-            }
-        }
-    };
-    return response;
+    if (uri.match(/^\/gccc-feedback$/)) {
+      return redirect("https://docs.google.com/forms/d/e/1FAIpQLSdsiBksGlxz6KUXKovhZhOvRhV_eGs60aPeh_DieVwiCpizww/viewform");
+    }
+
+    if (uri.match(/^\/github$/)) {
+      return redirect("https://github.com/co-cddo");
+    }
+
+    if (uri.match(/^\/ddat-framework$/)) {
+      return redirect("https://www.gov.uk/government/collections/digital-data-and-technology-profession-capability-framework");
+    }
+
+    return redirect("https://www.gov.uk/government/organisations/central-digital-and-data-office/about");
 }
 
 if (typeof(module) === "object") {

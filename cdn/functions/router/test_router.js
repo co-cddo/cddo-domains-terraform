@@ -92,7 +92,7 @@ describe("origin_request", function() {
     expect(res).to.not.equal(fixture_1.request);
     expect(res.statusCode).to.equal(307);
     expect(Object.keys(res["headers"])).to.have.members(["location"]);
-    expect(res["headers"]["location"].value).to.equal('https://www.gov.uk');
+    expect(res["headers"]["location"].value).to.equal('https://www.gov.uk/government/organisations/central-digital-and-data-office/about');
 
     done();
   });
@@ -122,9 +122,7 @@ describe("origin_request", function() {
   it('fixture_4', function(done) {
     var res = viewer_request(fixture_4);
 
-    expect(res).to.not.equal(fixture_4.request);
-    expect(res.statusCode).to.equal(200);
-    expect(res["body"]).to.contain('OK');
+    expect(res).to.equal(fixture_4.request);
 
     done();
   });
