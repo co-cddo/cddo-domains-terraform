@@ -30,6 +30,17 @@ function handler(event) {
       };
     }
 
+    if (uri.match(/^\/asset/)) {
+      return request;
+    }
+
+    if (uri.match(/^\/people\//)) {
+      if (request.uri.indexOf(".html") == -1) {
+        request.uri += ".html";
+      }
+      return request;
+    }
+
     if (uri.match(/^\/.well[-_]known\/status$/)) {
       request.uri = "/.well-known/status";
       // file hosted in S3
@@ -45,11 +56,11 @@ function handler(event) {
     if (uri.match(/^(\/.well[-_]known)?\/security\.txt$/)) {
       return redirect("https://vdp.cabinetoffice.gov.uk/.well-known/security.txt");
     }
-    
+
     if (uri.match(/^\/sbd$/)) {
       return redirect("https://www.gov.uk/government/publications/government-cyber-security-strategy-2022-to-2030/government-cyber-security-strategy-2022-to-2030-html#secure-technology-and-digital-services");
     }
-    
+
     if (uri.match(/^\/sbd-feedback$/)) {
       return redirect("https://docs.google.com/forms/d/e/1FAIpQLSeaVg5VAiJGTCHOSYzZ0R66LrwZZVoSjPEMb-GT-_ue4G1ohQ/viewform");
     }
