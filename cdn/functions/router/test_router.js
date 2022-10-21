@@ -114,7 +114,7 @@ describe("origin_request", function() {
     expect(res).to.not.equal(fixture_3.request);
     expect(res.statusCode).to.equal(307);
     expect(Object.keys(res["headers"])).to.have.members(["location"]);
-    expect(res["headers"]["location"].value).to.equal('https://vdp.cabinetoffice.gov.uk/.well-known/security.txt');
+    expect(res["headers"]["location"].value).to.equal('https://vulnerability-reporting.service.security.gov.uk/.well-known/security.txt');
 
     done();
   });
