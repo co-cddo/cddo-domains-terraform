@@ -22,9 +22,9 @@ function handler(event) {
     } else if (headerKeys.indexOf(':authority') > -1) {
         host = request.headers[':authority'].value;
     }
-    
+
     if (host != "cddo.cabinetoffice.gov.uk") {
-        return redirect("https://cddo.cabinetoffice.gov.uk/"+uri);
+        return redirect("https://cddo.cabinetoffice.gov.uk"+uri);
     }
 
     if (uri.match(/^\/.well[-_]known\/(tea(pot)?|☕|%e2%98%95|coffee)/)) {
