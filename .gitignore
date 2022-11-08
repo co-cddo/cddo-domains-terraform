@@ -1,7 +1,7 @@
 # Local .terraform directories
 **/.terraform/*
-**/.terraform
-**/.terraform*
+**/.terraform/
+**/.terraform.*
 **/personal
 
 **/node_modules

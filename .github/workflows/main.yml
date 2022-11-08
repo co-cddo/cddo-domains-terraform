@@ -1,0 +1,100 @@
+name: Test and deploy to AWS
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - '.github/workflows/codeql.yml'
+      - '.github/dependabot.yml'
+      - '**.md'
+  workflow_dispatch:
+
+permissions:
+      id-token: write   # This is required for requesting the JWT for AWS authentication
+      contents: read    # This is required for actions/checkout
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: prod-aws
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          path: main
+
+      - name: Read .terraform-version file
+        run: |
+          TV=$(cat main/cdn/.terraform-version | tr -d [:space:])
+          echo "terraform_version=${TV}"
+          echo "terraform_version=${TV}" >> $GITHUB_OUTPUT
+
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ env.terraform_version }}
+
+      - name: Show me files
+        run: ls -lah
+
+      - name: Build and test router
+        run: |
+          cd main/
+          chmod +x build/*.sh
+          bash build/test_router.sh
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          aws-region: eu-west-2
+
+      - name: Test IAM credentials
+        run: aws sts get-caller-identity
+
+      - name: Apply Terraform
+        env:
+          AWS_REGION: eu-west-2
+        run: |
+          cd main/dns/
+          terraform init
+          terraform apply -auto-approve
+          cd ../cdn/
+          terraform init
+          terraform apply -auto-approve
+
+      - name: Deploy S3 assets
+        env:
+          S3_ASSET_BUCKET: ${{ secrets.S3_ASSET_BUCKET }}
+          AWS_REGION: eu-west-2
+        run: |
+          cd main/static-files/
+          aws s3 cp . "s3://${S3_ASSET_BUCKET}/" --recursive
+
+      - name: Check deployed URLs
+        env:
+          SERVICE_DOMAIN: cddo.cabinetoffice.gov.uk
+        run: |
+          echo "Checking CloudFront status"
+          curl -v "https://${SERVICE_DOMAIN}/.well-known/status" \
+            --connect-timeout 10 --max-redirs 0 --silent --stderr - > .cfstatus.txt
+          egrep -i '< HTTP/[0123\.]+ 200' .cfstatus.txt
+          egrep -i "OK" .cfstatus.txt
+
+          echo "Checking redirect"
+          curl -v "https://${SERVICE_DOMAIN}/" \
+            --connect-timeout 10 --max-redirs 0 --silent --stderr - > .wwwstatus.txt
+          egrep -i '< HTTP/[0123\.]+ 3' .wwwstatus.txt
+          grep '< location: https://www.gov.uk/government/organisations/central-digital-and-data-office/about' .wwwstatus.txt
+
+          echo "Checking '/people/template' is public"
+          curl -v "https://${SERVICE_DOMAIN}/people/template" \
+            --connect-timeout 10 --max-redirs 0 --silent --stderr - > .pstatus.txt
+          egrep -i '< HTTP/[0123\.]+ 200' .pstatus.txt
+          egrep -i "assets/init.js" .pstatus.txt
+
+          echo "Checking '/assets/init.js' is public"
+          curl -v "https://${SERVICE_DOMAIN}/assets/init.js" \
+            --connect-timeout 10 --max-redirs 0 --silent --stderr - > .jsstatus.txt
+          egrep -i '< HTTP/[0123\.]+ 200' .jsstatus.txt
