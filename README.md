@@ -10,18 +10,15 @@ Infrastructure as code (Terraform) for the [cddo.cabinetoffice.gov.uk](https://c
 
 [cdn](cdn/) is for managing the web presence for CDDO, currently a redirect to gov.uk. CloudFront is used and S3 is the backend origin, [Functions](https://aws.amazon.com/blogs/aws/introducing-cloudfront-functions-run-your-code-at-the-edge-with-low-latency-at-any-scale/) are used to handle traffic dynamically and in a scalable way.
 
-The [router JavaScript function](cdn/functions/router/router.js) has several endpoints:
+The [router JavaScript function](cdn/functions/router/router.js) has several endpoints, for example:
 
-|Domain|Path|Destination/Result|
-|---|---|---|
-|cddo.cabinetoffice.gov.uk|/github|https://github.com/co-cddo|
-|cddo.cabinetoffice.gov.uk|/ddat-framework|https://www.gov.uk/government/collections/digital-data-and-technology-profession-capability-framework|
-|cddo.cabinetoffice.gov.uk|/about<br/>/* (where not matched above)|https://www.gov.uk/government/organisations/central-digital-and-data-office/about|
-|*|/.well-known/security.txt<br/>/security.txt|https://www.gov.uk/.well-known/security.txt|
-|*|/.well-known/teapot|Should return 418 and not a redirect|
-|*|/.well-known/status|Should return 200 and not a redirect|
-|*|/.well-known/hosting-provider|Should return 200 a link to CloudFront|
-|*|/* (where not matched above)|https://www.gov.uk|
+|Path|Destination/Result|
+|---|---|
+|/.well-known/security.txt<br/>/security.txt|https://www.gov.uk/.well-known/security.txt|
+|/.well-known/status|Should return 200 and not a redirect|
+|/.well-known/hosting-provider|Should return 200 a link to CloudFront|
+|/ddat-framework|https://www.gov.uk/government/collections/digital-data-and-technology-profession-capability-framework|
+|/* (where not matched)|https://www.gov.uk/government/organisations/central-digital-and-data-office/about|
 
 The router function has a test suite that can be ran by doing:
 ``` bash
