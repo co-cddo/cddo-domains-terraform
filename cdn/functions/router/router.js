@@ -22,33 +22,40 @@ function handler(event) {
     } else if (headerKeys.indexOf(':authority') > -1) {
         host = request.headers[':authority'].value;
     }
+    
+    if (host != "cddo.cabinetoffice.gov.uk") {
+        return redirect("https://cddo.cabinetoffice.gov.uk/"+uri);
+    }
 
-    if (uri.match(/^\/.well[-_]known\/teapot$/)) {
+    if (uri.match(/^\/.well[-_]known\/(tea(pot)?|☕|%e2%98%95|coffee)/)) {
       return {
           statusCode: 418,
-          statusDescription: "I'm a teapot"
+          statusDescription: "I'm a teapot",
+          body: "I'm a teapot\nhttps://www.rfc-editor.org/rfc/rfc2324"
       };
     }
 
     if (uri.match(/^\/asset/)) {
+      // file hosted in S3
       return request;
     }
 
     if (uri.match(/^\/people\//)) {
+      // file hosted in S3
       if (request.uri.indexOf(".html") == -1) {
         request.uri += ".html";
       }
       return request;
     }
 
-    if (uri.match(/^\/.well[-_]known\/status$/)) {
-      request.uri = "/.well-known/status";
+    if (uri.match(/^\/.well[-_]known\/status/)) {
+      request.uri = "/.well-known/status.txt";
       // file hosted in S3
       return request;
     }
 
-    if (uri.match(/^\/.well[-_]known\/hosting-provider$/)) {
-      request.uri = "/.well-known/hosting-provider";
+    if (uri.match(/^\/.well[-_]known\/hosting/)) {
+      request.uri = "/.well-known/hosting-provider.html";
       // file hosted in S3
       return request;
     }
