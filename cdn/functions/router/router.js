@@ -49,13 +49,13 @@ function handler(event) {
     }
 
     if (uri.match(/^\/.well[-_]known\/status/)) {
-      request.uri = "/.well-known/status";
+      request.uri = "/.well-known/status.txt";
       // file hosted in S3
       return request;
     }
 
     if (uri.match(/^\/.well[-_]known\/hosting/)) {
-      request.uri = "/.well-known/hosting-provider";
+      request.uri = "/.well-known/hosting-provider.html";
       // file hosted in S3
       return request;
     }
