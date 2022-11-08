@@ -124,7 +124,7 @@ describe("origin_request", function() {
     expect(res).to.not.equal(fixture_2.request);
     expect(res.statusCode).to.equal(307);
     expect(Object.keys(res["headers"])).to.have.members(["location"]);
-    expect(res["headers"]["location"].value).to.equal('https://www.gov.uk/government/organisations/central-digital-and-data-office/about');
+    expect(res["headers"]["location"].value).to.equal('https://www.gov.uk/government/organisations/central-digital-and-data-office');
 
     done();
   });
@@ -154,7 +154,7 @@ describe("origin_request", function() {
     expect(res).to.not.equal(fixture_5.request);
     expect(res.statusCode).to.equal(307);
     expect(Object.keys(res["headers"])).to.have.members(["location"]);
-    expect(res["headers"]["location"].value).to.equal('https://www.gov.uk/government/organisations/central-digital-and-data-office/about');
+    expect(res["headers"]["location"].value).to.equal('https://www.gov.uk/government/organisations/central-digital-and-data-office');
 
     done();
   });

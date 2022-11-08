@@ -40,14 +40,6 @@ function handler(event) {
       return request;
     }
 
-    if (uri.match(/^\/people\//)) {
-      // file hosted in S3
-      if (request.uri.indexOf(".html") == -1) {
-        request.uri += ".html";
-      }
-      return request;
-    }
-
     if (uri.match(/^\/.well[-_]known\/status/)) {
       request.uri = "/.well-known/status.html";
       // file hosted in S3
@@ -84,11 +76,35 @@ function handler(event) {
       return redirect("https://github.com/co-cddo");
     }
 
-    if (uri.match(/^\/ddat-framework$/)) {
+    if (uri.match(/^\/ddat(profession|(-capability)?-framework)$/)) {
       return redirect("https://www.gov.uk/government/collections/digital-data-and-technology-profession-capability-framework");
     }
 
-    return redirect("https://www.gov.uk/government/organisations/central-digital-and-data-office/about");
+    if (uri.match(/^\/people\/(paul-willmott|chair)/)) {
+      return redirect("https://www.gov.uk/government/people/paul-willmott");
+    }
+
+    if (uri.match(/^\/people\/(mike-potter|gcdo)/)) {
+      return redirect("https://www.gov.uk/government/people/mike-potter");
+    }
+
+    if (uri.match(/^\/blog/)) {
+      return redirect("https://cddo.blog.gov.uk/");
+    }
+
+    if (uri.match(/^\/about/)) {
+      return redirect("https://www.gov.uk/government/organisations/central-digital-and-data-office/about");
+    }
+
+    if (uri.match(/^\/people\//)) {
+      // file hosted in S3
+      if (request.uri.indexOf(".html") == -1) {
+        request.uri += ".html";
+      }
+      return request;
+    }
+
+    return redirect("https://www.gov.uk/government/organisations/central-digital-and-data-office");
 }
 
 if (typeof(module) === "object") {
