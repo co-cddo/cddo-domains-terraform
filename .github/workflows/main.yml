@@ -45,7 +45,7 @@ jobs:
           bash build/test_router.sh
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
+        uses: aws-actions/configure-aws-credentials@v2.2.0
         with:
           role-to-assume: ${{ secrets.AWS_ROLE }}
           aws-region: eu-west-2
