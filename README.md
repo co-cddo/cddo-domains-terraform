@@ -15,11 +15,10 @@ The [router JavaScript function](cdn/functions/router/router.js) has several end
 
 |Path|Destination/Result|
 |---|---|
-|/.well-known/security.txt<br/>/security.txt|https://www.gov.uk/.well-known/security.txt|
+|/.well-known/security.txt<br/>/security.txt|https://vulnerability-reporting.nonprod-service.security.gov.uk/.well-known/security.txt|
 |/.well-known/status|Should return 200 and not a redirect|
 |/.well-known/hosting-provider|Should return 200 a link to CloudFront|
-|/ddat-framework|https://www.gov.uk/government/collections/digital-data-and-technology-profession-capability-framework|
-|/* (where not matched)|https://www.gov.uk/government/organisations/central-digital-and-data-office/about|
+|/* (where not matched)|https://www.gov.uk/government/organisations/central-digital-and-data-office/|
 
 The router function has a test suite that can be ran by doing:
 ``` bash
