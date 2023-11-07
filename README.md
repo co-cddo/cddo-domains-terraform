@@ -3,7 +3,7 @@
 ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 ![Terraform Version v1.3.2](https://img.shields.io/badge/Terraform-v1.3.2-blueviolet?style=for-the-badge&logo=terraform)
 ![Last commit image](https://img.shields.io/github/last-commit/co-cddo/domain-iac?style=for-the-badge&logo=github)
-![Deployment status](https://img.shields.io/github/workflow/status/co-cddo/cddo-domains-terraform/Test%20and%20deploy%20to%20AWS?label=deployment&style=for-the-badge&logo=github)
+![Deployment status](https://img.shields.io/github/actions/workflow/status/co-cddo/cddo-domains-terraform/main.yml?branch=main&style=for-the-badge&logo=github)
 
 Infrastructure as code (Terraform) for the [cddo.cabinetoffice.gov.uk](https://cddo.cabinetoffice.gov.uk) domain running on AWS.
 
