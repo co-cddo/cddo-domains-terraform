@@ -55,6 +55,10 @@ function handler(event) {
     if (uri.match(/^(\/.well[-_]known)?\/security\.txt$/)) {
       return redirect("https://vulnerability-reporting.service.security.gov.uk/.well-known/security.txt");
     }
+    
+    if (uri.match(/^\/(data|dm|datamarketplace)$/)) {
+      return redirect("https://dm.cddo.cabinetoffice.gov.uk");
+    }
 
     if (uri.match(/^\/sbd$/)) {
       return redirect("https://www.security.gov.uk/guidance/secure-by-design/");
