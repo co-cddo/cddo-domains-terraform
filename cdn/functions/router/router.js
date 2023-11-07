@@ -64,12 +64,8 @@ function handler(event) {
       return redirect("https://docs.google.com/forms/d/e/1FAIpQLSeaVg5VAiJGTCHOSYzZ0R66LrwZZVoSjPEMb-GT-_ue4G1ohQ/viewform");
     }
 
-    if (uri.match(/^\/gccc$/)) {
-      return redirect("https://www.gov.uk/government/publications/government-cyber-security-strategy-2022-to-2030/government-cyber-security-strategy-2022-to-2030-html#pillar-2-defend-as-one");
-    }
-
-    if (uri.match(/^\/gccc-feedback$/)) {
-      return redirect("https://docs.google.com/forms/d/e/1FAIpQLSdsiBksGlxz6KUXKovhZhOvRhV_eGs60aPeh_DieVwiCpizww/viewform");
+    if (uri.match(/^\/(gccc|gc3)$/)) {
+      return redirect("https://gc3.security.gov.uk");
     }
 
     if (uri.match(/^\/github$/)) {
