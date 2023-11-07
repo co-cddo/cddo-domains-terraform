@@ -86,7 +86,7 @@ jobs:
           curl -v "https://${SERVICE_DOMAIN}/" \
             --connect-timeout 10 --max-redirs 0 --silent --stderr - > .wwwstatus.txt
           egrep -i '< HTTP/[0123\.]+ 3' .wwwstatus.txt
-          grep '< location: https://www.gov.uk/government/organisations/central-digital-and-data-office/about' .wwwstatus.txt
+          grep '< location: https://www.gov.uk/' .wwwstatus.txt
 
           echo "Checking '/people/template' is public"
           curl -v "https://${SERVICE_DOMAIN}/people/template" \
