@@ -56,8 +56,8 @@ function handler(event) {
       return redirect("https://vulnerability-reporting.service.security.gov.uk/.well-known/security.txt");
     }
     
-    if (uri.match(/^\/(data|dm|datamarketplace)$/)) {
-      return redirect("https://dm.cddo.cabinetoffice.gov.uk");
+    if (uri.match(/^\/(dm|datamarketplace)$/)) {
+      return redirect("https://mvp.dm.cddo.cabinetoffice.gov.uk");
     }
 
     if (uri.match(/^\/sbd$/)) {
