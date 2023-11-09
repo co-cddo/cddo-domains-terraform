@@ -2,7 +2,7 @@ resource "aws_route53_record" "dm-delegated-zone" {
   zone_id         = aws_route53_zone.cddo-cabinetoffice-gov-uk.zone_id
   allow_overwrite = true
   name            = "dm"
-  ttl             = local.standard_ttl
+  ttl             = 3600
   type            = "NS"
 
   records = [
