@@ -92,6 +92,10 @@ function handler(event) {
       return redirect("https://cddo.blog.gov.uk/");
     }
 
+    if (uri.match(/^\/okrs/)) {
+      return redirect("https://script.google.com/a/macros/digital.cabinet-office.gov.uk/s/AKfycbyzY-qaFeokMppwGHQJaY2EFi81LocBog9CnWOv9swIdMGrVHmrfXku9wI3bwXgEwY/exec");
+    }
+
     if (uri.match(/^\/about/)) {
       return redirect("https://www.gov.uk/government/organisations/central-digital-and-data-office/about");
     }
