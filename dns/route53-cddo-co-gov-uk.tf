@@ -47,6 +47,14 @@ resource "aws_route53_record" "www-aaaa" {
   }
 }
 
+resource "aws_route53_record" "portfolio-a" {
+  zone_id = aws_route53_zone.cddo-cabinetoffice-gov-uk.zone_id
+  name    = "portfolio.${local.domain}"
+  type    = "CNAME"
+  ttl     = "60"
+  records = ["gds-portfolio-alb-712098049.eu-west-2.elb.amazonaws.com"]
+}
+
 module "co-cddo-aws-r53-parked-domain" {
   source                 = "github.com/co-cddo/aws-route53-parked-govuk-domain//terraform?ref=5e85556ce417cd335c440fd1e7079bd331f443d5"
   zone_id                = aws_route53_zone.cddo-cabinetoffice-gov-uk.zone_id
