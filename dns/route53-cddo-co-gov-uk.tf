@@ -47,6 +47,14 @@ resource "aws_route53_record" "www-aaaa" {
   }
 }
 
+resource "aws_route53_record" "enterprise-arch" {
+  zone_id = aws_route53_zone.cddo-cabinetoffice-gov-uk.zone_id
+  name    = "architecture.${local.domain}"
+  type    = "CNAME"
+  ttl     = "60"
+  records = ["govuk-digital-backbone.github.io"]
+}
+
 resource "aws_route53_record" "portfolio-a" {
   zone_id = aws_route53_zone.cddo-cabinetoffice-gov-uk.zone_id
   name    = "portfolio.${local.domain}"
