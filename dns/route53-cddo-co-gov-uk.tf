@@ -52,7 +52,7 @@ resource "aws_route53_record" "enterprise-arch" {
   name    = "architecture.${local.domain}"
   type    = "CNAME"
   ttl     = "60"
-  records = ["govuk-digital-backbone.github.io"]
+  records = ["gds-dtx.github.io"]
 }
 
 resource "aws_route53_record" "portfolio-a" {
