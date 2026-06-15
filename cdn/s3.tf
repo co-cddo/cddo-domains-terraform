@@ -1,6 +1,5 @@
 resource "aws_s3_bucket" "co_cddo_cdn_source_bucket" {
   bucket = local.cddo_bucket_name
-  acl    = "private"
 
   tags = { "Name" : local.cddo_bucket_name }
 }
